@@ -161,6 +161,9 @@
   .btn.alt { background: #fff; color: var(--ink); border: 1px solid var(--ink); }
   .btn:hover { background: var(--copper); color: #fff; border-color: var(--copper); }
   .btn.off { pointer-events: none; background: #efeeea; color: var(--ink3); border: 1px solid var(--rule); }
+  .card dd .sub { font: 400 12.5px/1.6 var(--sans); color: var(--ink3); }
+  .card .mirror { display: inline-block; margin-top: 16px; font: 400 13px/1 var(--sans); color: var(--copper); text-decoration: none; }
+  code.cmd { display: block; width: fit-content; max-width: 100%; margin-top: 6px; font: 400 12px/1.6 var(--mono); background: #f1f0ec; padding: 3px 8px; word-break: break-all; }
   .card .soon { font: 400 13px/1.7 var(--sans); color: var(--ink2); margin-top: 14px; }
   ol.install { list-style: none; counter-reset: s; }
   ol.install li { counter-increment: s; position: relative; padding: 0 0 26px 54px; font: 400 15px/1.9 var(--serif); color: #333; }
@@ -341,7 +344,7 @@ D102  1S1588    ; anti-parallel</pre>
         <div><b>3<small>samples</small></b>插件延迟</div>
         <div><b>16.4<small>%</small></b>CPU · 64 样本缓冲</div>
         <div><b>AU · VST3</b>以及独立运行程序</div>
-        <div><b>macOS</b>Apple Silicon</div>
+        <div><b>macOS · Windows</b>Apple Silicon · 64 位 Windows</div>
       </div>
     </div>
   </div>
@@ -356,24 +359,26 @@ D102  1S1588    ; anti-parallel</pre>
     <div class="card">
       <div class="top"><div class="name">TS808</div><div class="ver">VERSION 0.1.0</div></div>
       <dl>
-        <dt>格式</dt><dd>AU · VST3 · 独立运行程序（安装时可选）</dd>
-        <dt>系统</dt><dd>macOS，Apple Silicon（M 系列芯片）</dd>
-        <dt>大小</dt><dd>127 MB</dd>
-        <dt>SHA-256</dt><dd><code>c557084ba82b6701c62f88fa68784a82680b58d89af8120ca017a1f3c4b7a22f</code></dd>
+        <dt>macOS</dt><dd>AU · VST3 · 独立运行程序<br><span class="sub">Apple Silicon（M 系列芯片）· 127 MB</span></dd>
+        <dt>Windows</dt><dd>VST3 · 独立运行程序<br><span class="sub">Windows 10 / 11，64 位 · 39 MB</span></dd>
+        <dt>SHA-256</dt><dd><span class="sub">.pkg</span> <code>c557084ba82b6701c62f88fa68784a82680b58d89af8120ca017a1f3c4b7a22f</code><br>
+          <span class="sub">.exe</span> <code>051bbdd5c050276559c7940d6eea52c6671f9c6dd47a5406668262f5a819a277</code></dd>
       </dl>
       <div class="btns">
-        <a class="btn" id="dl-main" href="#">下载安装包<small>GitHub · 127 MB</small></a>
-        <a class="btn alt" id="dl-mirror" href="#">国内镜像<small>网盘</small></a>
+        <a class="btn" id="dl-mac" href="#">macOS 下载<small>.pkg · 127 MB</small></a>
+        <a class="btn alt" id="dl-win" href="#">Windows 下载<small>.exe · 39 MB</small></a>
       </div>
+      <a class="mirror" id="dl-mirror" href="#">国内网盘镜像 →</a>
       <div class="soon" id="soon">下载即将开放。</div>
     </div>
     <div>
       <ol class="install">
-        <li>双击 <b>TS808-0.1.0.pkg</b>。如果 macOS 提示“无法验证开发者”，打开 <b>系统设置 → 隐私与安全性</b>，在下方点 <b>仍要打开</b>。</li>
-        <li>安装位置可以选 <b>仅为我安装</b>，不需要管理员密码；点“自定”可以只装 AU、VST3 或独立程序。</li>
+        <li><b>macOS</b>：双击 <b>TS808-0.1.0.pkg</b>。如果提示“无法验证开发者”，打开 <b>系统设置 → 隐私与安全性</b>，在下方点 <b>仍要打开</b>。可以选 <b>仅为我安装</b>，不需要管理员密码。</li>
+        <li><b>Windows</b>：双击 <b>TS808-0.1.0-win64-setup.exe</b>。如果出现“Windows 已保护你的电脑”，点 <b>更多信息 → 仍要运行</b>。VST3 会装到 <b>C:\Program Files\Common Files\VST3</b>。</li>
         <li>在宿主软件里重新扫描插件，在厂商 <b>netlist</b> 下找到 <b>TS808</b>，插在箱子模拟前面。</li>
       </ol>
-      <p class="note">下载后可以在终端里运行 <code style="font:400 12px var(--mono)">shasum -a 256 TS808-0.1.0.pkg</code>，确认结果与左侧一致，再安装。</p>
+      <p class="note">两个平台的电路计算结果一致：同一段输入，输出相差小于 −220 dB。<br>
+        下载后可以核对 SHA-256，与左侧一致再安装。macOS：<code class="cmd">shasum -a 256 TS808-0.1.0.pkg</code>；Windows：<code class="cmd">certutil -hashfile TS808-0.1.0-win64-setup.exe SHA256</code></p>
     </div>
   </div>
 </div></section>
@@ -386,14 +391,16 @@ D102  1S1588    ; anti-parallel</pre>
 <script src="assets/ac_data.js"></script>
 <script>
 // ---- download links: fill in when the files are hosted (empty = "coming soon") ----
-const DOWNLOADS = { main: 'https://github.com/vvYvv7-bit/netlist/releases/download/ts808-v0.1.0/TS808-0.1.0.pkg', mirror: '' };
+const DOWNLOADS = {
+  mac: 'https://github.com/vvYvv7-bit/netlist/releases/download/ts808-v0.1.0/TS808-0.1.0.pkg',
+  win: 'https://github.com/vvYvv7-bit/netlist/releases/download/ts808-v0.1.0/TS808-0.1.0-win64-setup.exe',
+  mirror: '',
+};
 (() => {
   const set = (id, url) => { const a = document.getElementById(id); if (url) a.href = url; else a.classList.add('off'); };
-  set('dl-main', DOWNLOADS.main); set('dl-mirror', DOWNLOADS.mirror);
-  if (DOWNLOADS.main || DOWNLOADS.mirror) document.getElementById('soon').remove();
-  if (DOWNLOADS.main && !DOWNLOADS.mirror) {          // no mirror yet: one full-width button
-    document.getElementById('dl-mirror').remove(); document.querySelector('.btns').style.gridTemplateColumns = '1fr';
-  }
+  set('dl-mac', DOWNLOADS.mac); set('dl-win', DOWNLOADS.win);
+  if (DOWNLOADS.mirror) document.getElementById('dl-mirror').href = DOWNLOADS.mirror; else document.getElementById('dl-mirror').remove();
+  if (DOWNLOADS.mac || DOWNLOADS.win) document.getElementById('soon').remove();
 })();
 
 // ---- nav rule on scroll ----
