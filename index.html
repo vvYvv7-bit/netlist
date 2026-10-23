@@ -362,7 +362,7 @@ D102  1S1588    ; anti-parallel</pre>
         <dt>SHA-256</dt><dd><code>c557084ba82b6701c62f88fa68784a82680b58d89af8120ca017a1f3c4b7a22f</code></dd>
       </dl>
       <div class="btns">
-        <a class="btn" id="dl-main" href="#">下载安装包<small>GitHub</small></a>
+        <a class="btn" id="dl-main" href="#">下载安装包<small>GitHub · 127 MB</small></a>
         <a class="btn alt" id="dl-mirror" href="#">国内镜像<small>网盘</small></a>
       </div>
       <div class="soon" id="soon">下载即将开放。</div>
@@ -386,11 +386,14 @@ D102  1S1588    ; anti-parallel</pre>
 <script src="assets/ac_data.js"></script>
 <script>
 // ---- download links: fill in when the files are hosted (empty = "coming soon") ----
-const DOWNLOADS = { main: '', mirror: '' };
+const DOWNLOADS = { main: 'https://github.com/vvYvv7-bit/netlist/releases/download/ts808-v0.1.0/TS808-0.1.0.pkg', mirror: '' };
 (() => {
   const set = (id, url) => { const a = document.getElementById(id); if (url) a.href = url; else a.classList.add('off'); };
   set('dl-main', DOWNLOADS.main); set('dl-mirror', DOWNLOADS.mirror);
   if (DOWNLOADS.main || DOWNLOADS.mirror) document.getElementById('soon').remove();
+  if (DOWNLOADS.main && !DOWNLOADS.mirror) {          // no mirror yet: one full-width button
+    document.getElementById('dl-mirror').remove(); document.querySelector('.btns').style.gridTemplateColumns = '1fr';
+  }
 })();
 
 // ---- nav rule on scroll ----
